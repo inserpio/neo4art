@@ -21,7 +21,7 @@
     <neo4j:config base-package="it.inserpio.neo4art.domain" graphDatabaseService="graphDatabaseService"/>
 	-->
 	
-    <neo4j:config base-package="it.inserpio.neo4art.domain" storeDirectory="/Users/lorenzo/Progetti/Larus/red/neo4j/neo4art/database/2_0_1_SDN_3_0_1_SPRING/data/graph.db" />
+    <neo4j:config base-package="it.inserpio.neo4art.domain" storeDirectory="data/graph.db" />
 
     <neo4j:repositories base-package="it.inserpio.neo4art.repository"/>
 
