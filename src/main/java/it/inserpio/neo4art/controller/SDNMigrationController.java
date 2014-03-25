@@ -53,4 +53,19 @@ public class SDNMigrationController
       return new ResponseEntity<String>("Migration to SDN 3.0.1 failed: " + me.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+  
+  @RequestMapping(value="/add-museums-to-spatial-index", method=RequestMethod.POST, produces={"application/xml", "application/json"})
+  public ResponseEntity<String> addMuseumsToSpatialIndex()
+  {
+    try
+    {
+      migrationService.addMuseumsToSpatialIndex();
+      
+      return new ResponseEntity<String>("Museums added to spatial index.", HttpStatus.OK);
+    }
+    catch (MigrationException me)
+    {
+      return new ResponseEntity<String>("Error adding museums to spatial index: " + me.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 }

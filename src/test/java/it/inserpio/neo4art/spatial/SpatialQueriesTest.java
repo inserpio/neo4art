@@ -13,71 +13,51 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package it.inserpio.neo4art.service.impl;
 
-import it.inserpio.neo4art.exception.MigrationException;
-import it.inserpio.neo4art.service.SDNMigrationService;
+package it.inserpio.neo4art.spatial;
 
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.neo4j.gis.spatial.indexprovider.LayerNodeIndex;
 import org.neo4j.gis.spatial.indexprovider.SpatialIndexProvider;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.index.Index;
+import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.graphdb.index.IndexManager;
 import org.neo4j.helpers.collection.MapUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
-import org.springframework.data.neo4j.support.typerepresentation.LabelBasedNodeTypeRepresentationStrategy;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
+import org.springframework.data.neo4j.support.query.CypherQueryEngine;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 
  * @author Lorenzo Speranzoni
- * @since Mar 19, 2014
+ * @since Mar 23, 2014
  */
-@Service
-public class SDN301MigrationService implements SDNMigrationService
+@Configuration
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "/META-INF/spring/application-context.xml" })
+@Transactional
+@EnableTransactionManagement
+public class SpatialQueriesTest
 {
-  public static final Logger logger = LoggerFactory.getLogger(SDN301MigrationService.class);
-  
-  public static final String CYPHER_ADD_SDN_LABEL_TO_NODE = "match (n:`%s`) set n:`" + LabelBasedNodeTypeRepresentationStrategy.LABELSTRATEGY_PREFIX + "%s`";
-
   @Autowired
   private Neo4jTemplate neo4jTemplate;
 
-  @Override
-  @Transactional(propagation = Propagation.REQUIRED)
-  public boolean migrate() throws MigrationException
-  {
-    Collection<String> labels = this.neo4jTemplate.getGraphDatabase().getAllLabelNames();
-    
-    for (String label : labels)
-    {
-      if (!label.equals(LabelBasedNodeTypeRepresentationStrategy.SDN_LABEL_STRATEGY) && !label.startsWith(LabelBasedNodeTypeRepresentationStrategy.LABELSTRATEGY_PREFIX))
-      {
-        String addSdnLabelToNodeStatement = String.format(CYPHER_ADD_SDN_LABEL_TO_NODE , label, label);
-        
-        logger.debug("Adding label `" + LabelBasedNodeTypeRepresentationStrategy.LABELSTRATEGY_PREFIX + label + "` for Spring Data compatibility to nodes with label `" + label + "`.");
-
-        this.neo4jTemplate.query(addSdnLabelToNodeStatement, null);
-      }
-    }
-
-    return true;
-  }
-
-  @Override
-  @Transactional(propagation = Propagation.REQUIRED)
-  public boolean addMuseumsToSpatialIndex() throws MigrationException
+  @Test
+  public void addMuseumToSpatialIndex()
   {
     GraphDatabaseService graphDatabaseService = this.neo4jTemplate.getGraphDatabaseService();
     
@@ -89,7 +69,7 @@ public class SDN301MigrationService implements SDNMigrationService
                           LayerNodeIndex.WKT_PROPERTY_KEY, "wkt") );
     
     Index<Node> index = indexManager.forNodes("museumLocation", config);
-     
+    
     Iterator<Node> museums = this.neo4jTemplate.query("MATCH (m:MUSEUM) RETURN m", null).to(Node.class).iterator();
 
     while (museums.hasNext())
@@ -98,7 +78,7 @@ public class SDN301MigrationService implements SDNMigrationService
       
       if (museum.hasProperty("wkt"))
       {
-        System.out.println("ADDING " + museum.getProperty("name") + " to museumLocation index...");
+        System.out.println("Adding " + museum.getProperty("name") + " to museumLocation index...");
       
         index.add(museum, "dummy", "value");
       }
@@ -107,7 +87,33 @@ public class SDN301MigrationService implements SDNMigrationService
         System.out.println(museum.getProperty("name") + " NOT ADDED to museumLocation index...");
       }
     }
+  }
+
+  @Test
+  public void shouldExtractNationalGallery()
+  {
+    GraphDatabaseService graphDatabaseService = this.neo4jTemplate.getGraphDatabaseService();
     
-    return true;
+    IndexManager indexManager = graphDatabaseService.index();
+
+    Map<String, Object> params = new HashMap<String, Object>();
+    params.put(LayerNodeIndex.POINT_PARAMETER, new Double[]{51.5086, -0.1283});
+    params.put(LayerNodeIndex.DISTANCE_IN_KM_PARAMETER, 0.1);
+    
+    Map<String, String> config = Collections.unmodifiableMap(
+        MapUtil.stringMap(SpatialIndexProvider.GEOMETRY_TYPE, LayerNodeIndex.POINT_GEOMETRY_TYPE,
+                          IndexManager.PROVIDER, SpatialIndexProvider.SERVICE_NAME,
+                          LayerNodeIndex.WKT_PROPERTY_KEY, "wkt") );
+    
+    String geoQuery = LayerNodeIndex.WITHIN_DISTANCE_QUERY;
+
+    Index<Node> index = indexManager.forNodes("museumLocation", config);
+    Assert.assertNotNull(index);
+    IndexHits<Node> hits = index.query(geoQuery, params);
+    Assert.assertTrue(hits.hasNext());    
+    
+    CypherQueryEngine engine = this.neo4jTemplate.queryEngineFor();
+    Result<Map<String,Object>> result = engine.query("start ng=node:museumLocation('withinDistance:[51.5086,-0.1283,0.1]') return ng", null);
+    Assert.assertTrue(result.iterator().hasNext());
   }
 }

@@ -25,4 +25,6 @@ import it.inserpio.neo4art.exception.MigrationException;
 public interface SDNMigrationService
 {
   boolean migrate() throws MigrationException;
+
+  boolean addMuseumsToSpatialIndex() throws MigrationException;
 }

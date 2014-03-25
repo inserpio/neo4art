@@ -44,8 +44,10 @@ public class City extends AbstractEntity
 
   private String      country;
 
-  private String      geo;
-
+  private Double      latitude;
+  
+  private Double      longitude;
+  
   public City()
   {
   }
@@ -110,19 +112,29 @@ public class City extends AbstractEntity
     this.country = country;
   }
 
-  public String getGeo()
+  public Double getLatitude()
   {
-    return geo;
+    return latitude;
   }
 
-  public void setGeo(String geo)
+  public void setLatitude(Double latitude)
   {
-    this.geo = geo;
+    this.latitude = latitude;
+  }
+
+  public Double getLongitude()
+  {
+    return longitude;
+  }
+
+  public void setLongitude(Double longitude)
+  {
+    this.longitude = longitude;
   }
 
   @Override
   public String toString()
   {
-    return "City [getId()=" + getId() + ", name=" + name + ", province=" + province + ", region=" + region + ", counties=" + counties + ", state=" + state + ", country=" + country + ", geo=" + geo + "]";
+    return "City [name=" + name + ", province=" + province + ", region=" + region + ", counties=" + counties + ", state=" + state + ", country=" + country + ", latitude=" + latitude + ", longitude=" + longitude + "]";
   }
 }

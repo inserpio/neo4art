@@ -65,7 +65,8 @@ public class Neo4jTemplateUsageTest
     
     Assert.assertTrue(labels.hasNext());
     Assert.assertEquals("ARTIST", labels.next());
-    Assert.assertFalse(labels.hasNext());
+    Assert.assertTrue(labels.hasNext());
+    Assert.assertEquals("_ARTIST", labels.next());
   }
   
   @Test

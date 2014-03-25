@@ -16,9 +16,11 @@
 
 package it.inserpio.neo4art.domain;
 
+import org.neo4j.graphdb.Direction;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
 
 /**
  * @author Lorenzo Speranzoni
@@ -28,6 +30,8 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 @TypeAlias("ARTWORK")
 public class Artwork extends AbstractEntity
 {
+  public static final String AUTHOR = "AUTHOR";
+  
   @Indexed(unique=true)
   private String title;
   
@@ -42,6 +46,9 @@ public class Artwork extends AbstractEntity
   private String f_order;
   
   private String jh_order;
+  
+  @RelatedTo(type = AUTHOR, direction = Direction.OUTGOING, elementClass = Artist.class)
+  private Artist artist;
   
   public Artwork()
   {
@@ -115,5 +122,15 @@ public class Artwork extends AbstractEntity
   public void setJHOrder(String jh_order)
   {
     this.jh_order = jh_order;
+  }
+
+  public Artist getArtist()
+  {
+    return artist;
+  }
+
+  public void setArtist(Artist artist)
+  {
+    this.artist = artist;
   }
 }

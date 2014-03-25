@@ -17,6 +17,7 @@ package it.inserpio.neo4art.repository;
 
 import it.inserpio.neo4art.domain.Museum;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
@@ -58,14 +59,14 @@ public class MuseumRepositoryTest
   }
   
   @Test
-  @SuppressWarnings("unchecked")
   public void shouldRetrieveMuseumsBySpatialLocation()
   {
-    List<Museum> museums = this.museumRepository.findWithinDistance("museumLocation", 51.507222,-0.1275, 10).as(List.class);
+    Iterator<Museum> museums = this.museumRepository.findWithinDistance("museumLocation", -0.1283, 51.5086, 10.0).iterator();
     
-    //Assert.assertNotNull(museums);
-    //Assert.assertFalse(CollectionUtils.isEmpty(museums));
-    
-    System.out.println(museums.size());
+    Assert.assertNotNull(museums);
+    while (museums.hasNext())
+    {
+      System.out.println(museums.next());
+    }
   }
 }
