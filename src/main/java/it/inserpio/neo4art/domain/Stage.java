@@ -19,6 +19,7 @@ import java.util.Date;
 
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
@@ -39,9 +40,11 @@ public class Stage extends AbstractEntity
 
   private long  to;
 
+  @Fetch
   @RelatedTo(type = RELATIONSHIP_IN, direction = Direction.OUTGOING, elementClass = City.class)
   private City  in;
 
+  @Fetch
   @RelatedTo(type = RELATIONSHIP_MOVED_TO, direction = Direction.OUTGOING, elementClass = Stage.class)
   private Stage next;
 

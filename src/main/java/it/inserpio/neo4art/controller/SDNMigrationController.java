@@ -27,6 +27,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * REST API:
+ * 
+ * /migrate/toSDN301
+ * /migrate/addMuseumsToSpatialIndex
  * 
  * @author Lorenzo Speranzoni
  * @since Mar 19, 2014
@@ -39,7 +43,7 @@ public class SDNMigrationController
   @Qualifier("SDN301MigrationService")
   private SDNMigrationService migrationService;
   
-  @RequestMapping(value="/to-sdn-301", method=RequestMethod.POST, produces={"application/xml", "application/json"})
+  @RequestMapping(value="/toSDN301", method=RequestMethod.POST, produces={"application/xml", "application/json"})
   public ResponseEntity<String> toSDN301()
   {
     try
@@ -54,7 +58,7 @@ public class SDNMigrationController
     }
   }
   
-  @RequestMapping(value="/add-museums-to-spatial-index", method=RequestMethod.POST, produces={"application/xml", "application/json"})
+  @RequestMapping(value="/addMuseumsToSpatialIndex", method=RequestMethod.POST, produces={"application/xml", "application/json"})
   public ResponseEntity<String> addMuseumsToSpatialIndex()
   {
     try

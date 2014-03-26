@@ -17,11 +17,14 @@ package it.inserpio.neo4art.controller;
 
 import it.inserpio.neo4art.domain.Museum;
 import it.inserpio.neo4art.repository.MuseumRepository;
+import it.inserpio.neo4art.service.MuseumService;
 
 import java.util.List;
 
+import org.apache.commons.collections.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,7 +36,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * /museums
  * /museums/1051
  * /museums/name/National%20Gallery
- * 
+ * /museums/lon/-0.1283/lat/51.5086/distanceInKm/10.0
  * 
  * @author Lorenzo Speranzoni
  * @since Mar 19, 2014
@@ -44,6 +47,9 @@ public class MuseumController
 {
   @Autowired
   private MuseumRepository museumRepository;
+  
+  @Autowired
+  private MuseumService museumService;
   
   /**
    * Retrieve museum by id (i.e. nodeId)
@@ -75,10 +81,25 @@ public class MuseumController
    * @param artistId
    * @return
    */
-  @RequestMapping(value="/museums/artist/{artistId}", method=RequestMethod.GET, produces={"application/xml", "application/json"})
+  @RequestMapping(value="/artist/{artistId}", method=RequestMethod.GET, produces={"application/xml", "application/json"})
   public @ResponseBody List<Museum> getMuseumsForArtist(@PathVariable long artistId)
   {
     return this.museumRepository.findMuseumByArtist(artistId); 
+  }
+  
+  /**
+   * Find museums hosting selected artist's artworks
+   * 
+   * @param artistId
+   * @return
+   */
+  @Transactional
+  @RequestMapping(value="/lon/{lon}/lat/{lat}/distanceInKm/{distanceInKm}", method=RequestMethod.GET, produces={"application/xml", "application/json"})
+  public @ResponseBody List<Museum> getMuseumsWithinDistance(@PathVariable double lon, @PathVariable double lat, @PathVariable double distanceInKm)
+  {
+    System.out.println("this.museumRepository.findWithinDistance(MuseumRepository.MUSEUM_GEOSPATIAL_INDEX, " + lon + ", " + lat + ", " + distanceInKm + ")");
+
+    return this.museumService.getMuseumsWithinDistance(lon, lat, distanceInKm);
   }
   
   /**
@@ -90,6 +111,6 @@ public class MuseumController
   @RequestMapping(method=RequestMethod.GET, produces={"application/xml", "application/json"})
   public @ResponseBody List<Museum> getAllMuseums()
   {
-    return this.museumRepository.findAll().as(List.class);
+    return IteratorUtils.toList(this.museumRepository.findAll().iterator());
   }
 }
