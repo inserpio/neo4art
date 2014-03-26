@@ -16,6 +16,8 @@
 
 package it.inserpio.neo4art.spatial;
 
+import it.inserpio.neo4art.repository.MuseumRepository;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -68,7 +70,7 @@ public class SpatialQueriesTest
                           IndexManager.PROVIDER, SpatialIndexProvider.SERVICE_NAME,
                           LayerNodeIndex.WKT_PROPERTY_KEY, "wkt") );
     
-    Index<Node> index = indexManager.forNodes("museumLocation", config);
+    Index<Node> index = indexManager.forNodes(MuseumRepository.MUSEUM_GEOSPATIAL_INDEX, config);
     
     Iterator<Node> museums = this.neo4jTemplate.query("MATCH (m:MUSEUM) RETURN m", null).to(Node.class).iterator();
 
@@ -78,13 +80,13 @@ public class SpatialQueriesTest
       
       if (museum.hasProperty("wkt"))
       {
-        System.out.println("Adding " + museum.getProperty("name") + " to museumLocation index...");
+        System.out.println("Adding " + museum.getProperty("name") + " to " + MuseumRepository.MUSEUM_GEOSPATIAL_INDEX + " index...");
       
         index.add(museum, "dummy", "value");
       }
       else
       {
-        System.out.println(museum.getProperty("name") + " NOT ADDED to museumLocation index...");
+        System.out.println(museum.getProperty("name") + " NOT ADDED to " + MuseumRepository.MUSEUM_GEOSPATIAL_INDEX + " index...");
       }
     }
   }
@@ -107,13 +109,13 @@ public class SpatialQueriesTest
     
     String geoQuery = LayerNodeIndex.WITHIN_DISTANCE_QUERY;
 
-    Index<Node> index = indexManager.forNodes("museumLocation", config);
+    Index<Node> index = indexManager.forNodes(MuseumRepository.MUSEUM_GEOSPATIAL_INDEX, config);
     Assert.assertNotNull(index);
     IndexHits<Node> hits = index.query(geoQuery, params);
     Assert.assertTrue(hits.hasNext());    
     
     CypherQueryEngine engine = this.neo4jTemplate.queryEngineFor();
-    Result<Map<String,Object>> result = engine.query("start ng=node:museumLocation('withinDistance:[51.5086,-0.1283,0.1]') return ng", null);
+    Result<Map<String,Object>> result = engine.query("start ng=node:" + MuseumRepository.MUSEUM_GEOSPATIAL_INDEX + "('withinDistance:[51.5086,-0.1283,0.1]') return ng", null);
     Assert.assertTrue(result.iterator().hasNext());
   }
 }

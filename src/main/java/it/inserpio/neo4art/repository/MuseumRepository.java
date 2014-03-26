@@ -23,14 +23,18 @@ import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.data.neo4j.repository.SpatialRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
  * @author Lorenzo Speranzoni
  * @since 16.03.2014
  */
+@Transactional
 public interface MuseumRepository extends GraphRepository<Museum>, SpatialRepository<Museum>
 {
+  public static final String MUSEUM_GEOSPATIAL_INDEX = "museumLocation";
+  
   @Query("MATCH (m:MUSEUM) WHERE m.name={name} RETURN distinct(m) as museum") 
   Museum findMuseumByName(@Param("name") String name);
   

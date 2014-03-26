@@ -61,7 +61,7 @@ public class MuseumRepositoryTest
   @Test
   public void shouldRetrieveMuseumsBySpatialLocation()
   {
-    Iterator<Museum> museums = this.museumRepository.findWithinDistance("museumLocation", -0.1283, 51.5086, 10.0).iterator();
+    Iterator<Museum> museums = this.museumRepository.findWithinDistance(MuseumRepository.MUSEUM_GEOSPATIAL_INDEX, -0.1283, 51.5086, 10.0).iterator();
     
     Assert.assertNotNull(museums);
     while (museums.hasNext())
