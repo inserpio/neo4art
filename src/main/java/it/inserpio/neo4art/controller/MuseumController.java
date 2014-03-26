@@ -95,11 +95,9 @@ public class MuseumController
    */
   @Transactional
   @RequestMapping(value="/lon/{lon}/lat/{lat}/distanceInKm/{distanceInKm}", method=RequestMethod.GET, produces={"application/xml", "application/json"})
-  public @ResponseBody List<Museum> getMuseumsWithinDistance(@PathVariable double lon, @PathVariable double lat, @PathVariable double distanceInKm)
+  public @ResponseBody List<Museum> getMuseumsWithinDistance(@PathVariable("lon") double longitude, @PathVariable("lat") double latitude, @PathVariable double distanceInKm)
   {
-    System.out.println("this.museumRepository.findWithinDistance(MuseumRepository.MUSEUM_GEOSPATIAL_INDEX, " + lon + ", " + lat + ", " + distanceInKm + ")");
-
-    return this.museumService.getMuseumsWithinDistance(lon, lat, distanceInKm);
+    return this.museumService.getMuseumsWithinDistance(longitude, latitude, distanceInKm);
   }
   
   /**
