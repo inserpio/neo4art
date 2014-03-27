@@ -18,6 +18,7 @@ package it.inserpio.neo4art.domain;
 
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
@@ -46,7 +47,8 @@ public class Artwork extends AbstractEntity
   private String f_order;
   
   private String jh_order;
-  
+
+  @Fetch
   @RelatedTo(type = AUTHOR, direction = Direction.OUTGOING, elementClass = Artist.class)
   private Artist artist;
   

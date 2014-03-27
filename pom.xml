@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.larusba.spikes.neo4j</groupId>
 	<artifactId>neo4art</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.9-SNAPSHOT</version>
 	<description>neo4art spike based on Neo4j, Heroku, GeoSpatial, MapQuest</description>
 	<packaging>war</packaging>
 

@@ -4,7 +4,6 @@ html, body{
 
 .artworksRadar {
 	border: 1px solid rgb(30, 151, 255);
-	display: table;
     height: 96%;
 	margin-right: 40px;
 	margin-left: 20px;
@@ -13,34 +12,37 @@ html, body{
 }
 
 .artworksRadarForm {
-	border: 1px solid #eeeeee;	
-	display: table-cell;
+	border: 1px solid rgb(30, 151, 255);	
 	float: left;
 	font-family: "Source Sans Pro", sans-serif;
 	font-weight: 300;
-    height: 30%;
+    height: 175px;
 	margin-left: 5px;
 	margin-right: 5px;
 	margin-bottom: 5px;
+	overflow: auto;
 	padding: 5px 5px 5px 5px;
 	width: 97.8%;
 }
 
 .artworksRadarMap {
-	border: 1px solid #eeeeee;	
-	display: table-cell;
+	border: 1px solid rgb(30, 151, 255);	
 	float: left;
-    height: 67%;
+    height: 65%;
 	margin-left: 5px;
 	width: 63%;
 }
 
 .artworksRadarList {
-	border: 1px solid #eeeeee;	
-	display: table-cell;
+	border: 1px solid rgb(30, 151, 255);	
 	float: left;
-    height: 67%;
+    height: 65%;
 	margin-left:5px;
 	margin-right:5px;
+	overflow: auto;
 	width: 35%;
+}
+
+.artworkRadarListContent {
+	font-family: "Source Sans Pro", sans-serif;
 }

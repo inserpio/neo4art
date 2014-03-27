@@ -18,18 +18,18 @@
 	  </head>
   <body>
   	<div id="artworksRadar" class="artworksRadar">
+   		<div style="width: 100%; text-align: center;">
+   			<span style="font-family: Waiting for the Sunrise; font-weight: 300; font-size: 30px; color: rgb(30, 151, 255);">
+   				NEO4ART: modelling Van Gogh's Journey in a Neo4j Graph Database
+   			</span>
+   		</div>
     	<div id="artworksRadarForm" class="artworksRadarForm">
-    		<div style="width: 100%; text-align: center;">
-    			<span style="font-family: Waiting for the Sunrise; font-weight: 300; font-size: 30px; color: rgb(30, 151, 255);">
-    				NEO4ART: modelling Van Gogh's Journey in a Neo4j Graph Database
-    			</span>
-    		</div>
     		<br/>
     		<div style="width: 50%; text-align: left; float: left;">
 	    		<strong>Current location:</strong>
 	    		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	    		<small>latitude</small>: <span id="currentLatitude" style="font-weight: bold; color: #33a000;"></span>,
-	    		<small>longitude</small>: <span id="currentLongitude" style="font-weight: bold; color: #33a000;"></span>
+	    		<small>latitude</small>: <span id="currentLatitude" style="font-weight: 400; color: #33a000;"></span>,
+	    		<small>longitude</small>: <span id="currentLongitude" style="font-weight: 400; color: #33a000;"></span>
 	    		<br/> 
 	    		<br/> 
 	    		<strong>Travel to:</strong>
@@ -47,16 +47,17 @@
     		<div style="width: 50%; text-align: left; float: right;">
 	    		<strong>You can try:</strong>
 	    		<ul>
-	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-sanmateo')" style="color: #33a000;">Neo4j San Mateo, CA</a></li> 
-	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-london'  )" style="color: #33a000;">Neo4j London, UK</a></li>
-	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-malmo'   )" style="color: #33a000;">Neo4j Melm&ouml;, SW</a></li>
-	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-desden'  )" style="color: #33a000;">Neo4j Desden, DE</a></li>
-	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-venice'  )" style="color: #33a000;">"Neo4j" Venice, IT (indeed only Lorenzo's Home)</a></li>
+	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-sanmateo')" style="color: rgb(30, 151, 255);">Neo4j San Mateo, CA</a></li> 
+	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-london'  )" style="color: rgb(30, 151, 255);">Neo4j London, UK</a></li>
+	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-malmo'   )" style="color: rgb(30, 151, 255);">Neo4j Melm&ouml;, SW</a></li>
+	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-desden'  )" style="color: rgb(30, 151, 255);">Neo4j Desden, DE</a></li>
+	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-venice'  )" style="color: rgb(30, 151, 255);">"Neo4j" Venice, IT (indeed only Lorenzo's Home)</a></li>
 	    		</ul>
 	    	</div>
     	</div>
     	<div id="artworksRadarMap" class="artworksRadarMap"></div>
     	<div id="artworksRadarList" class="artworksRadarList"></div>
   	</div>
+  	<div id="artworkThumbnail" style="position:absolute; top: 70px; left:25%; right: 25%; width: 600px; height: 600px; padding: 20px 20px 20px 2px; display: none; border: 1px solid rgb(30, 151, 255); background-color: white; z-index: 100;"></div>
   </body>
 </html>

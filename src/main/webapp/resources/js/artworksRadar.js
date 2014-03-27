@@ -97,7 +97,7 @@ function loadMapByCoordinates(context, latitude, longitude)
     	artworksRadarMap.enableMouseWheelZoom();
 	});
     
-    addPoi(latitude, longitude, context + '/resources/images/poi-you.png', '<img style="max-height: 250px;" src="http://www.vggallery.com/painting/f_0365v.jpg">');
+    addPoi(latitude, longitude, context + '/resources/images/poi-you.png', '');
 }
 
 /**
@@ -143,10 +143,10 @@ function showMuseums(museums, context, latitude, longitude)
 	{
 		var museum = museums[i];
 		
-		console.log("Adding poi for museum: " + museum.name);
-		
-		addPoi(museum.latitude, museum.longitude, context + '/resources/images/poi-museum.png', '<img style="max-height: 250px;" src="http://www.vggallery.com/painting/f_0365v.jpg">');
+		addPoi(museum.latitude, museum.longitude, context + '/resources/images/poi-museum.png', buildPoiRolloverContent(context, museum));
 	}
+	
+	addPoi(latitude, longitude, context + '/resources/images/poi-you.png', '', 30, 30);
 	
 	artworksRadarMap.bestFit();
 }
@@ -158,12 +158,15 @@ function showMuseums(museums, context, latitude, longitude)
  * @param icon
  * @param content
  */
-function addPoi(latitude, longitude, icon, content)
+function addPoi(latitude, longitude, icon, content, width, height)
 {
+	width = (width != undefined && width != null && width != "") ? width : 50;
+	height = (height != undefined && height != null && height != "") ? height : 50;
+	
 	var poi=new MQA.Poi({ lat: latitude, lng: longitude });
 	
 	/*An example using the MQA.Icon constructor. This constructor takes a URL to an image, and the image's height and width.*/
-	var icon=new MQA.Icon(icon, 50, 50);
+	var icon=new MQA.Icon(icon, width, height);
 	
 	poi.setRolloverContent(content);
 	
@@ -175,6 +178,152 @@ function addPoi(latitude, longitude, icon, content)
 	
 	/*This will add the POI to the map in the map's default shape collection.*/
 	artworksRadarMap.addShape(poi);
+}
+
+/**
+ * 
+ * @param context
+ * @param museum
+ * @returns {String}
+ */
+function buildPoiRolloverContent(context, museum)
+{
+	var html = "<table>" +
+			     "<tr>" +
+			       "<td colspan='3'><strong>" + museum.name + "</strong></td>" +
+			     "</tr>" +
+			     "<tr>" +
+			       "<td colspan='3'>&nbsp;</td>" +
+			     "</tr>" +
+			     "<tr>" +
+			       "<td style='font-family: courier new;'>Address</td>" +
+			       "<td>:</td>" +
+			       "<td>" + ((museum.address != null) ? museum.address : "N.A.") + "</td>" +
+			     "</tr>" +
+			     "<tr>" +
+			       "<td style='font-family: courier new;'>Web Site</td>" +
+			       "<td>:</td>" +
+			       "<td><a href='" + museum.website + "' target='_blank'>" + museum.website + "</a></td>" +
+			     "</tr>" +
+			     "<tr>" +
+			       "<td style='font-family: courier new;'>Wikipedia</td>" +
+			       "<td>:</td>" +
+			       "<td><a href='" + museum.wikipedia + "' target='_blank'>" + museum.wikipedia + "</a></td>" +
+			     "</tr>" +
+			     "<tr>" +
+			       "<td style='font-family: courier new;'>Director</td>" +
+			       "<td>:</td>" +
+			       "<td>" + ((museum.director != null) ? museum.director : "N.A.") + "</td>" +
+			     "</tr>" +
+			     "<tr>" +
+			       "<td style='font-family: courier new;'>Latitude</td>" +
+			       "<td>:</td>" +
+			       "<td>" + museum.latitude + "</td>" +
+			     "</tr>" +
+			     "<tr>" +
+			       "<td style='font-family: courier new;'>Longitude</td>" +
+			       "<td>:</td>" +
+			       "<td>" + museum.longitude + "</td>" +
+			     "</tr>" +
+			     "<tr>" +
+			       "<td colspan='3'>&nbsp;</td>" +
+			     "</tr>" +
+			     "<tr>" +
+			       "<td colspan='3' align='center'><strong><a href='javascript:loadArtworks(\"" + context + "\", " + museum.id + ", \"" + museum.name + "\")' style='color: red;'>SHOW HOSTED PAINTINGS</a></strong></td>" +
+			     "</tr>" +
+			   "</table>";
+	
+	return html;
+}
+
+/**
+ * 
+ * @param context
+ * @param museumId
+ * @param museumName
+ */
+function loadArtworks(context, museumId, museumName)
+{
+	$.ajax(
+	{
+		type: "GET",
+		url: context + "/artworks/museum/" + museumId,
+		dataType: "json"
+	})
+	.done(function(response)
+	{
+		showArtworksList(context, museumName, response);
+	});
+}
+
+/**
+ * 
+ * @param context
+ * @param museumName
+ * @param artworks
+ */
+function showArtworksList(context, museumName, artworks)
+{
+	var html = "<table class='artworkRadarListContent'>" +
+                 "<tr>" +
+                   "<td style='font-weight: 400; color: #33a000;'>" + museumName + "</td>" +
+                 "</tr>";
+	
+	for (var i = 0; i < artworks.length; i++)
+	{
+		var artwork = artworks[i];
+		
+		html +=  "<tr>" +
+                   "<td>&nbsp;</td>" +
+                 "</tr>" +
+                 "<tr>" +
+                   "<td><strong>" + artwork.title + "<strong></td>" +
+                 "</tr>" +
+  			     "<tr>" +
+			       "<td><strong>" + artwork.artist.firstName + " " + artwork.artist.lastName + "</strong></td>" +
+			     "</tr>" +
+			     "<tr>" +
+			       "<td><small>" + ((artwork.month != null) ? artwork.month : "") + " " + ((artwork.year != null) ? artwork.year : "")  + "</small></td>" +
+			     "</tr>" +
+			     "<tr>" +
+			       "<td><small>" + artwork.type + "<small></td>" +
+			     "</tr>" +
+			     "<tr>" +
+			       "<td><small><a href='javascript:showArtworkThumbnail(\"" + artwork.thumbnail + "\");' target='_blank'>" + artwork.thumbnail + "</a></small></td>" +
+			     "</tr>" +
+				 "<tr>" +
+				   "<td><small>F:" + artwork.forder + ", JH:" + artwork.jhorder + "</small></td>" +
+				 "</tr>";
+	}
+	
+    html += "</table>";
+
+	$("#artworksRadarList").html(html);
+}
+
+/**
+ * 
+ * @param url
+ */
+function showArtworkThumbnail(url)
+{
+	var html = "<div style='text-align:center;'>" +
+			     "<img style='max-width: 575px; max-height: 575px;' src='" + url + "'>" +
+			     "<br/><br/>" +
+			     "<strong><a href='javascript:hideArtworkThumbnail();' style='font-family: Source Sans Pro; color: rgb(30, 151, 255);'>CLOSE</a></strong>" +
+			   "<div>";
+
+	$("#artworkThumbnail").html(html);
+	$("#artworkThumbnail").show();
+}
+
+/**
+ * 
+ * @param url
+ */
+function hideArtworkThumbnail(url)
+{
+	$("#artworkThumbnail").hide();
 }
 
 /**
