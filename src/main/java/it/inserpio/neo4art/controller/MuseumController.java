@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * /museums
  * /museums/1051
  * /museums/name/National%20Gallery
- * /museums/lon/-0.1283/lat/51.5086/distanceInKm/10.0
+ * /museums/lon/51.5086/lat/-0.1283/distanceInKm/10.0
  * 
  * @author Lorenzo Speranzoni
  * @since Mar 19, 2014
