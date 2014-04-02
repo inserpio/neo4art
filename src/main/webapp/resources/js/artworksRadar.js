@@ -137,13 +137,25 @@ function showMuseums(museums, context, latitude, longitude)
 {
 	artworksRadarMap.setCenter({lat: latitude, lng: longitude});
 	artworksRadarMap.removeAllShapes();	
-	artworksRadarMap.bestFit();	
 	
-	for (var i = 0; i < museums.length; i++)
+	if (museums.length == 0)
 	{
-		var museum = museums[i];
-		
-		addPoi(museum.latitude, museum.longitude, context + '/resources/images/poi-museum.png', buildPoiRolloverContent(context, museum));
+		var html = "<table class='artworkRadarListContent'>" +
+				     "<tr>" +
+				       "<td style='font-weight: 400; color: #33a000;'>NO MUSEUM FOUND :(</td>" +
+				     "</tr>";
+                   "</table>";
+
+        $("#artworksRadarList").html(html);
+	}
+	else
+	{
+		for (var i = 0; i < museums.length; i++)
+		{
+			var museum = museums[i];
+			
+			addPoi(museum.latitude, museum.longitude, context + '/resources/images/poi-museum.png', buildPoiRolloverContent(context, museum));
+		}
 	}
 	
 	addPoi(latitude, longitude, context + '/resources/images/poi-you.png', '', 30, 30);

@@ -25,27 +25,31 @@
    		</div>
     	<div id="artworksRadarForm" class="artworksRadarForm">
     		<br/>
-    		<div style="width: 50%; text-align: left; float: left;">
+    		<div style="width: 45%; text-align: left; float: left;">
 	    		<strong>Current location:</strong>
 	    		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    		<small>latitude</small>: <span id="currentLatitude" style="font-weight: 400; color: #33a000;"></span>,
 	    		<small>longitude</small>: <span id="currentLongitude" style="font-weight: 400; color: #33a000;"></span>
 	    		<br/> 
-	    		<br/> 
+	    		<br/>
 	    		<strong>Travel to:</strong>
 	    		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    		<small>latitude</small>: <input type="text" id="travelToLatitude" name="latitude" value="">,
 	    		<small>longitude</small>: <input type="text" id="travelToLongitude" name="longitude" value="">
 	    		<br/> 
 	    		<br/> 
-	    		<strong>And find musuems within distance:</strong>
-	    		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    		<strong>And find musuems hosting Van Gogh's artworks within distance:</strong>
+	    		<p/>
+	    		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    		<small>Km</small>: <input type="text" id="travelToWithinDistance" name="distanceInKm" value="">
 	    		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    		<input type="button" name="search" value="search" onclick="javascript:findMuseumsWithinDistance('${pageContext.request.contextPath}');">
 	    	</div>    		
-    		<div style="width: 50%; text-align: left; float: right;">
-	    		<strong>You can try:</strong>
+    		<div style="width: 40%; text-align: left; float: left;">
+	    		<strong>You can try to find museums hosting Van Gogh's artworks near:</strong>
 	    		<ul>
 	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-sanmateo')" style="color: rgb(30, 151, 255);">Neo4j San Mateo, CA</a></li> 
 	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-london'  )" style="color: rgb(30, 151, 255);">Neo4j London, UK</a></li>
@@ -53,6 +57,9 @@
 	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-desden'  )" style="color: rgb(30, 151, 255);">Neo4j Desden, DE</a></li>
 	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-venice'  )" style="color: rgb(30, 151, 255);">"Neo4j" Venice, IT (indeed only Lorenzo's Home)</a></li>
 	    		</ul>
+	    	</div>
+    		<div style="width: 15%; text-align: left; float: right;">
+    			<img width="150px" src="${pageContext.request.contextPath}/resources/images/van-gogh.png">
 	    	</div>
     	</div>
     	<div id="artworksRadarMap" class="artworksRadarMap"></div>
