@@ -26,7 +26,7 @@
     	<div id="artworksRadarForm" class="artworksRadarForm">
     		<br/>
     		<div style="width: 45%; text-align: left; float: left;">
-	    		<strong>Current location:</strong>
+	    		<strong>Your location:</strong>
 	    		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    		<small>latitude</small>: <span id="currentLatitude" style="font-weight: 400; color: #33a000;"></span>,
 	    		<small>longitude</small>: <span id="currentLongitude" style="font-weight: 400; color: #33a000;"></span>

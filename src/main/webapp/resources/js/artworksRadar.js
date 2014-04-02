@@ -15,14 +15,23 @@ function loadMapByUserGeoLocation(context)
 {
 	if (navigator.geolocation)
 	{
-		navigator.geolocation.getCurrentPosition(function (position) { loadMapByPosition(context, position); });
+		navigator.geolocation.getCurrentPosition(function (position) { loadMapByPosition(context, position); }, function (errorCode) { loadDefaultMap(context); });
 	}
 	else
 	{
 		console.log("Unable to get current user geolocation: assigning Venice as default.");
 		
-		loadMapByCoordinates(context, 45.4375, 12.335833);
+		loadDefaultMap(context);
 	}
+}
+
+/**
+ * 
+ * @param context
+ */
+function loadDefaultMap(context)
+{
+	loadMapByCoordinates(context, 45.4375, 12.335833);
 }
 
 /**
@@ -48,6 +57,10 @@ function loadMapByCoordinates(context, latitude, longitude)
 	
 	$("#currentLatitude").text(latitude);
 	$("#currentLongitude").text(longitude);
+	
+	$("#travelToLatitude").val(latitude);
+	$("#travelToLongitude").val(longitude);
+	$("#travelToWithinDistance").val(100.0);
 	
 	console.log("Loading map for " + latitude + ", " + longitude);
 	
@@ -200,6 +213,10 @@ function addPoi(latitude, longitude, icon, content, width, height)
  */
 function buildPoiRolloverContent(context, museum)
 {
+	var museumName = (museum.name).replace(/'/g, "&#39;");
+	
+	console.log(museumName);
+	
 	var html = "<table>" +
 			     "<tr>" +
 			       "<td colspan='3'><strong>" + museum.name + "</strong></td>" +
@@ -241,7 +258,7 @@ function buildPoiRolloverContent(context, museum)
 			       "<td colspan='3'>&nbsp;</td>" +
 			     "</tr>" +
 			     "<tr>" +
-			       "<td colspan='3' align='center'><strong><a href='javascript:loadArtworks(\"" + context + "\", " + museum.id + ", \"" + museum.name + "\")' style='color: red;'>SHOW HOSTED PAINTINGS</a></strong></td>" +
+			       "<td colspan='3' align='center'><strong><a href='javascript:loadArtworks(\"" + context + "\", " + museum.id + ", \"" + museumName + "\")' style='color: red;'>SHOW HOSTED PAINTINGS</a></strong></td>" +
 			     "</tr>" +
 			   "</table>";
 	
