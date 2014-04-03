@@ -53,7 +53,7 @@
 	    		<ul>
 	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-sanmateo')" style="color: rgb(30, 151, 255);">Neo4j San Mateo, CA</a></li> 
 	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-london'  )" style="color: rgb(30, 151, 255);">Neo4j London, UK</a></li>
-	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-malmo'   )" style="color: rgb(30, 151, 255);">Neo4j Melm&ouml;, SW</a></li>
+	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-malmo'   )" style="color: rgb(30, 151, 255);">Neo4j Malm&ouml;, SW</a></li>
 	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-desden'  )" style="color: rgb(30, 151, 255);">Neo4j Desden, DE</a></li>
 	    			<li><a href="javascript:travelTo('${pageContext.request.contextPath}', 'neo4j-venice'  )" style="color: rgb(30, 151, 255);">"Neo4j" Venice, IT (indeed only Lorenzo's Home)</a></li>
 	    		</ul>
