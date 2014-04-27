@@ -9,7 +9,7 @@
 	    
 	    <script src="http://www.mapquestapi.com/sdk/js/v7.0.s/mqa.toolkit.js?key=Fmjtd%7Cluur2lu8nd%2Cbn%3Do5-901wlf"></script>
 	    
-	    <script src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
+	    <script src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.js"></script>
 	    <script src="${pageContext.request.contextPath}/resources/js/artworksRadar.js"></script>
 	    
 	    <script language="javascript">
