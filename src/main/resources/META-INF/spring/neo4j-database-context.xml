@@ -13,24 +13,8 @@
                            http://www.springframework.org/schema/data/neo4j
                            http://www.springframework.org/schema/data/neo4j/spring-neo4j.xsd">
 
-	<!-- EMBEDDED VERSION -->
-    <neo4j:config base-package="it.inserpio.neo4art.domain" storeDirectory="/Users/lorenzo/Progetti/Larus/red/neo4j/neo4art/database/2_0_1_SDN_3_0_1_SPRING/data/graph.db" />
+    <neo4j:config base-package="it.inserpio.neo4art.domain" storeDirectory="/Users/lorenzo/Progetti/Neo4j/spring-gx-2014-dallas/sample/embedded/database/neo4j-community-2.0.1/data/graph.db" />
 	
-	<!-- JELASTIC VERSION -->
-	<!--
-    <neo4j:config base-package="it.inserpio.neo4art.domain" storeDirectory="#{systemProperties['user.home']}/data/graph.db" />
-	-->
-	
-	<!-- SERVER VERSION (localhost)-->
-	<!--
-	<bean id="graphDatabaseService" class ="org.springframework.data.neo4j.rest.SpringRestGraphDatabase" scope="singleton">
-  		<constructor-arg index="0" value="http://localhost:7474/db/data/" />
-	</bean>
-	-->
-	
-
-    <neo4j:config base-package="it.inserpio.neo4art.domain" graphDatabaseService="graphDatabaseService"/>
-
     <neo4j:repositories base-package="it.inserpio.neo4art.repository"/>
 
     <tx:annotation-driven mode="proxy"/>
