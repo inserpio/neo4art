@@ -16,16 +16,20 @@
 
 package it.inserpio.neo4art.service.impl;
 
+import it.inserpio.neo4art.domain.Museum;
+import it.inserpio.neo4art.repository.MuseumRepository;
+import it.inserpio.neo4art.service.MuseumService;
+
 import java.util.List;
 
 import org.apache.commons.collections.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.Circle;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.Metrics;
+import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import it.inserpio.neo4art.domain.Museum;
-import it.inserpio.neo4art.repository.MuseumRepository;
-import it.inserpio.neo4art.service.MuseumService;
 
 /**
  * @author Lorenzo Speranzoni
@@ -45,7 +49,9 @@ public class MuseumEntityService implements MuseumService
   @SuppressWarnings("unchecked")
   public List<Museum> getMuseumsWithinDistance(double longitude, double latitude, double distanceInKm)
   {
-    return IteratorUtils.toList(this.museumRepository.findWithinDistance(MuseumRepository.MUSEUM_GEOSPATIAL_INDEX, longitude, latitude, distanceInKm).iterator());
+    Circle circle = new Circle(new Point(longitude, latitude), new Distance(distanceInKm, Metrics.KILOMETERS));
+
+	return IteratorUtils.toList(this.museumRepository.findWithinDistance(MuseumRepository.MUSEUM_GEOSPATIAL_INDEX, circle).iterator());
   }
 
 }
