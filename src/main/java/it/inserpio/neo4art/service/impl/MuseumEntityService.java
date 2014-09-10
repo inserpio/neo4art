@@ -49,15 +49,7 @@ public class MuseumEntityService implements MuseumService
   @SuppressWarnings("unchecked")
   public List<Museum> getMuseumsWithinDistance(double longitude, double latitude, double distanceInKm)
   {
-<<<<<<< HEAD
     Circle circle = new Circle(new Point(longitude, latitude), new Distance(distanceInKm, Metrics.KILOMETERS));
-=======
-    Point point = new Point(longitude, latitude);
-
-	Distance distance = new Distance(distanceInKm, Metrics.KILOMETERS);
-	
-	Circle circle = new Circle(point, distance);
->>>>>>> branch 'spring-gx-dallas-2014' of https://github.com/inserpio/neo4art.git
 
 	return IteratorUtils.toList(this.museumRepository.findWithinDistance(MuseumRepository.MUSEUM_GEOSPATIAL_INDEX, circle).iterator());
   }
