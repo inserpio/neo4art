@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class Neo4ArtController
 {
-  @RequestMapping(value="/artworksRadar", method=RequestMethod.GET, headers = "Accept=text/html", produces={"text/html"})
+  @RequestMapping(value="/", method=RequestMethod.GET, headers = "Accept=text/html", produces={"text/html"})
   public String artworksRadar()
   {
     return "artworksRadar";
