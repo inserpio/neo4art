@@ -1,17 +1,18 @@
-Find Van Gogh's artworks next to you, with Neo4j Spatial and Spring Data Neo4j 3.0.1
-=======
+# Neo4Art - Commons
 
-Modelling Van Gogh's Journey in a Neo4j Graph Database
+This component contains common classes and utility services to be shared across other projects.
 
-
-Main objective of this project is to build a geographical search engine to look for museums hosting masterpieces by Van Gogh next to my friends and me.
+`Entity` and `Domain` classes are defined here.
 
 
-Tech Stack:
+## Bold Thanks!
 
-- Spring Data Neo4j 3.0.1
-- Neo4j 2.0.1
-- Neo4j Spatial Plugin
+**If you like our idea, please consider to become a contributor of this project!**
 
 
-A complete description of this spike is posted on my blog at http://inserpio.wordpress.com/2014/04/03/artworks-spatial-search/
+Lorenzo, Olimpia, Enrico, Mattia and all stuff @ LARUS Business Automation
+
+www.neo4art.org / team@neo4art.org
+
+
+ 
