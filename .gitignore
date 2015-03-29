@@ -1,3 +1,4 @@
+.DS_Store
 .project
 .classpath
 .idea
@@ -5,3 +6,4 @@
 /bin
 /target
 /.settings
+/target/
